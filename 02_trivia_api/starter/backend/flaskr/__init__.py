@@ -1,11 +1,8 @@
 import os
+from models import setup_db, Question, Category
 from flask import Flask, request, abort, jsonify
-from sqlalchemy.sql.expression import cast
-from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import random
-
-from models import setup_db, Question, Category
 
 QUESTIONS_PER_PAGE = 10
 
@@ -23,16 +20,15 @@ def paginate_questions(request, selection):
 
 def create_app(test_config=None):
     app = Flask(__name__)
+
     setup_db(app)
 
     CORS(app, resources={'/': {'origins': '*'}})
 
     @app.after_request
     def after_request(response):
-        response.headers.add('Access-Control-Allow-Headers',
-                             'Content-Type,Authorization,true')
-        response.headers.add('Access-Control-Allow-Methods',
-                             'GET,PUT,POST,DELETE,OPTIONS')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,true')  # noqa
+        response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')  # noqa
         return response
 
     @app.route('/categories')
@@ -48,7 +44,7 @@ def create_app(test_config=None):
 
         return jsonify({
             'success': True,
-            'categories': categories_dict
+            'categories': categories_dict,
         })
 
     @app.route('/questions')
@@ -87,7 +83,7 @@ def create_app(test_config=None):
                 'deleted': id
             })
 
-        except:
+        except Exception:
             abort(422)
 
     @app.route('/questions', methods=['POST'])
@@ -122,8 +118,8 @@ def create_app(test_config=None):
                 abort(422)
 
             try:
-                question = Question(question=new_question, answer=new_answer,
-                                    difficulty=new_difficulty, category=new_category)
+                question = Question(new_question, new_answer,
+                                    new_difficulty, new_category)
                 question.insert()
 
                 selection = Question.query.order_by(Question.id).all()
@@ -137,18 +133,20 @@ def create_app(test_config=None):
                     'total_questions': len(Question.query.all())
                 })
 
-            except:
+            except Exception:
                 abort(422)
 
-    @app.route('/categories/<id>/questions')
+    @app.route('/categories/<int:id>/questions', methods=['GET'])
     def get_questions_by_category(id):
 
+        # get the category by id
         category = Category.query.filter_by(id=id).one_or_none()
+        print(category)
 
         if (category is None):
             abort(400)
 
-        selection = Question.query.filter_by(category=category.id).all()
+        selection = Question.query.filter_by(category=str(category.id)).all()
 
         paginated = paginate_questions(request, selection)
 
