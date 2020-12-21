@@ -153,7 +153,6 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'bad request')
-
-
+    
 if __name__ == "__main__":
     unittest.main()
