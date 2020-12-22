@@ -33,7 +33,9 @@ We started the full stack application for you. It is desiged with some key funct
 
 ### Backend
 
-The `./backend` directory contains a partially completed Flask and SQLAlchemy server. You will work primarily in app.py to define your endpoints and can reference models.py for DB and SQLAlchemy setup. 
+The `./backend` directory contains a partially completed Flask and SQLAlchemy server. You will work primarily in app.py to define your endpoints and can reference models.py for DB and SQLAlchemy setup.
+
+[View the README.md within ./backend for more details.](./backend/README.md)
 
 ### Frontend
 
