@@ -82,12 +82,15 @@ The `--reload` flag will detect file changes and restart the server automaticall
 The application will be served on **http://localhost:5000**
 
 ## Testing
+```bash
+createdb trivia_test
+```
 
 To run the flask tests, run the following command:
 ```bash
 python -m unittest discover -t ../
 ```
-_NOTE_: Make sure you create a database named `trivia` in the PostgreSQL server before running the tests.
+_NOTE_: Make sure you create a database named `trivia_test` in the PostgreSQL server before running the tests.
 
 ## API Documentation
 * GET "/categories"
