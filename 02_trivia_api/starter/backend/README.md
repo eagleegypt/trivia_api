@@ -39,7 +39,7 @@ pip install pycodestyle
 ```
 pycodestyle is a tool to check your Python code against some of the style conventions in PEP 8.
 
-#####Features
+##### Features
   - Plugin architecture: Adding new checks is easy.
   - Parseable output: Jump to error location in your editor.
   - Small: Just one Python file, requires only stdlib. You can use just the pycodestyle.py file for this purpose.
